@@ -2,7 +2,7 @@
 Contributors: lassebunk
 Donate link: http://lassebunk.dk/donate/
 Tags: ab testing, split testing, multivariate testing, themes, content, stylesheets, javascripts
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 A/B split testing for WordPress made easy.
 
@@ -52,6 +52,9 @@ You have access to a number of options to measure your split tests:
 
 = 1.0.2 =
 * Support for IP filters, e.g. to filter out visits and conversions from your home or office IPs.
+
+= 1.0.3 =
+* Support for database table prefixes (like <code>wp_</code>).
 
 == Upgrade Notice ==
 

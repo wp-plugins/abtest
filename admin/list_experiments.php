@@ -1,5 +1,5 @@
 <?php
-$experiments = $wpdb->get_results('SELECT * FROM wp_abtest_experiments ORDER BY name');
+$experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments ORDER BY name");
 ?>
 
 <div class="wrap">

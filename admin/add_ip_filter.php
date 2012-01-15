@@ -3,7 +3,7 @@ $wpdb->show_errors();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $ip = stripslashes($_POST['ip']);
   $description = stripslashes($_POST['description']);
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_ip_filters SET ip=%s, description=%s', $ip, $description));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_ip_filters SET ip=%s, description=%s", $ip, $description));
   
   redirect_to('?page=abtest&action=list_ip_filters');
 } else {

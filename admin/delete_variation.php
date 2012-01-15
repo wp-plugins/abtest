@@ -1,11 +1,11 @@
 <?php
 $id = (int)$_GET['id'];
-$var = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_variations WHERE id=%d', $id));
+$var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE id=%d", $id));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Delete the variation
-  $wpdb->query($wpdb->prepare('DELETE FROM wp_abtest_variation_views WHERE variation_id=%d', $id));
-  $wpdb->query($wpdb->prepare('DELETE FROM wp_abtest_variations WHERE id=%d', $id));
+  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."abtest_variation_views WHERE variation_id=%d", $id));
+  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."abtest_variations WHERE id=%d", $id));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $var->experiment_id);
 }

@@ -23,12 +23,12 @@ add_action('setup_theme', 'abtest_load_experiments');
 function abtest_load_experiments() {
   global $wpdb;
 
-  $experiments = $wpdb->get_results("SELECT * FROM wp_abtest_experiments");
+  $experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments");
   
   foreach ($experiments as $exp) {
     if (!isset($_SESSION['abtest_experiment_'.$exp->id.'_variation']) || $_SESSION['abtest_debug']) {
       // Get variation
-      $variation = $wpdb->get_row( $wpdb->prepare('SELECT * FROM wp_abtest_variations WHERE experiment_id=%d ORDER BY RAND() LIMIT 1', $exp->id) );
+      $variation = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d ORDER BY RAND() LIMIT 1", $exp->id) );
 
       // Set session
       $_SESSION['abtest_experiment_'.$exp->id.'_id'] = $variation->id;
@@ -68,11 +68,11 @@ function abtest_variation_view($variation_id) {
   
   if (!$_SESSION['abtest_debug']) {
     // Increase views on the variation
-    $wpdb->query( $wpdb->prepare('UPDATE wp_abtest_variations SET views=views+1 WHERE id=%d', $variation_id) );
+    $wpdb->query( $wpdb->prepare("UPDATE ".$wpdb->prefix."abtest_variations SET views=views+1 WHERE id=%d", $variation_id) );
 
-    $wpdb->query( $wpdb->prepare('
-        INSERT INTO wp_abtest_variation_views(variation_id, session_id, ip, date)
-        VALUES(%d, %s, %s, NOW())', $variation_id, session_id(), $_SERVER['REMOTE_ADDR'] ) );
+    $wpdb->query( $wpdb->prepare("
+        INSERT INTO ".$wpdb->prefix."abtest_variation_views(variation_id, session_id, ip, date)
+        VALUES(%d, %s, %s, NOW())", $variation_id, session_id(), $_SERVER['REMOTE_ADDR'] ) );
   }
 }
 
@@ -80,9 +80,9 @@ function abtest_goal_hit($goal_id) {
   global $wpdb;
   
   if (!$_SESSION['abtest_debug']) {
-    $wpdb->query( $wpdb->prepare('
-        INSERT INTO wp_abtest_goal_hits(goal_id, session_id, ip, date)
-        VALUES(%d, %s, %s, NOW())', $goal_id, session_id(), $_SERVER['REMOTE_ADDR'] ) );
+    $wpdb->query( $wpdb->prepare("
+        INSERT INTO ".$wpdb->prefix."abtest_goal_hits(goal_id, session_id, ip, date)
+        VALUES(%d, %s, %s, NOW())", $goal_id, session_id(), $_SERVER['REMOTE_ADDR'] ) );
   }
 }
 
@@ -100,7 +100,7 @@ function abtest_head_script() {
 add_action('wp_head', 'abtest_experiments_script');
 function abtest_experiments_script() {
   global $wpdb;
-  $experiments = $wpdb->get_results("SELECT * FROM wp_abtest_experiments WHERE type='javascript'");
+  $experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE type='javascript'");
 
   if (count($experiments) > 0) {
     ?>
@@ -119,7 +119,7 @@ function abtest_experiments_script() {
 add_action('wp_head', 'abtest_experiments_stylesheet');
 function abtest_experiments_stylesheet() {
   global $wpdb;
-  $experiments = $wpdb->get_results("SELECT * FROM wp_abtest_experiments WHERE type='stylesheet'");
+  $experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE type='stylesheet'");
   
   if (count($experiments) > 0) {
     ?>
@@ -190,7 +190,7 @@ add_filter('template', 'change_theme');
 add_filter('stylesheet', 'change_theme');
 function change_theme($theme) {
   global $wpdb;
-  $exp = $wpdb->get_row("SELECT * FROM wp_abtest_experiments WHERE type='theme'");
+  $exp = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE type='theme'");
   
   if ($exp) {
     $new_theme = abtest_get_experiment($exp->id);

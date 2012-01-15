@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Insert the variation
   $name = stripslashes($_POST['name']);
   $content = stripslashes($_POST['content']);
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_variations SET experiment_id=%d, name=%s, content=%s', $experiment_id, $name, $content));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_variations SET experiment_id=%d, name=%s, content=%s", $experiment_id, $name, $content));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $experiment_id);
 } else {
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $content = '';
 }
 
-$exp = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_experiments WHERE id=%d', $experiment_id));
+$exp = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE id=%d", $experiment_id));
 $themes = get_themes();
 ?>
 

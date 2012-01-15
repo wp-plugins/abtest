@@ -3,7 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $experiment_id = (int)$_POST['experiment_id'];
   // Insert the goal
   $name = stripslashes($_POST['name']);
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_goals SET experiment_id=%d, name=%s', $experiment_id, $name));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_goals SET experiment_id=%d, name=%s", $experiment_id, $name));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $experiment_id);
 } else {

@@ -1,6 +1,6 @@
 <?php
 $id = (int)$_GET['id'];
-$goal = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_goals WHERE id=%d', $id));
+$goal = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_goals WHERE id=%d", $id));
 ?>
 <div class="wrap">
   <h2>Tracking code</h2>

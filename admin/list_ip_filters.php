@@ -1,5 +1,5 @@
 <?php
-$filters = $wpdb->get_results('SELECT * FROM wp_abtest_ip_filters ORDER BY id');
+$filters = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters ORDER BY id");
 ?>
 <div class="wrap">
   <h2>IP filters</h2>

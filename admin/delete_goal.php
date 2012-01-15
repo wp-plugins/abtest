@@ -1,11 +1,11 @@
 <?php
 $id = (int)$_GET['id'];
-$var = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_goals WHERE id=%d', $id));
+$var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_goals WHERE id=%d", $id));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Delete the goal
-  $wpdb->query($wpdb->prepare('DELETE FROM wp_abtest_goal_hits WHERE goal_id=%d', $id));
-  $wpdb->query($wpdb->prepare('DELETE FROM wp_abtest_goals WHERE id=%d', $id));
+  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."abtest_goal_hits WHERE goal_id=%d", $id));
+  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."abtest_goals WHERE id=%d", $id));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $var->experiment_id);
 }

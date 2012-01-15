@@ -4,15 +4,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $name = stripslashes($_POST['name']);
   $type = stripslashes($_POST['type']);
   
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_experiments SET name=%s, type=%s', $name, $type));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_experiments SET name=%s, type=%s", $name, $type));
   $id = $wpdb->insert_id;
   
   // Insert variations
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_variations SET experiment_id=%d, name=%s', $id, 'Variation 1'));
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_variations SET experiment_id=%d, name=%s', $id, 'Variation 2'));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_variations SET experiment_id=%d, name=%s", $id, 'Variation 1'));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_variations SET experiment_id=%d, name=%s", $id, 'Variation 2'));
   
   // Insert goal
-  $wpdb->query($wpdb->prepare('INSERT INTO wp_abtest_goals SET experiment_id=%d, name=%s', $id, 'Goal 1'));
+  $wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."abtest_goals SET experiment_id=%d, name=%s", $id, 'Goal 1'));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $id);
 } else {

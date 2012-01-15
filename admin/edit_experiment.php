@@ -1,12 +1,12 @@
 <?php
 $id = (int)$_GET['id'];
-$var = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_experiments WHERE id=%d', $id));
+$var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE id=%d", $id));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Save the experiment
   $name = stripslashes($_POST['name']);
   
-  $wpdb->query($wpdb->prepare('UPDATE wp_abtest_experiments SET name=%s WHERE id=%d', $name, $id));
+  $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."abtest_experiments SET name=%s WHERE id=%d", $name, $id));
   
   redirect_to('?page=abtest&action=show_experiment&id=' . $id);
 } else {

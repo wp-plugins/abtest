@@ -1,13 +1,13 @@
 <?php
 $id = (int)$_GET['id'];
-$filter = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_ip_filters WHERE id=%d', $id));
+$filter = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters WHERE id=%d", $id));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Save the ip_filter
   $ip = stripslashes($_POST['ip']);
   $description = stripslashes($_POST['description']);
   
-  $wpdb->query($wpdb->prepare('UPDATE wp_abtest_ip_filters SET ip=%s, description=%s WHERE id=%d', $ip, $description, $id));
+  $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."abtest_ip_filters SET ip=%s, description=%s WHERE id=%d", $ip, $description, $id));
   
   redirect_to('?page=abtest&action=list_ip_filters');
 } else {

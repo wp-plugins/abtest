@@ -2,24 +2,24 @@
 $wpdb->show_errors();
 
 $id = (int)$_GET['id'];
-$exp = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_experiments WHERE id=%d', $id));
+$exp = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE id=%d", $id));
 
-$variation_stats = $wpdb->get_results($wpdb->prepare('
+$variation_stats = $wpdb->get_results($wpdb->prepare("
   SELECT *,
-  (SELECT COUNT(DISTINCT session_id) FROM wp_abtest_variation_views WHERE variation_id=wp_abtest_variations.id AND ip NOT IN (SELECT ip FROM wp_abtest_ip_filters)) AS views,
-  (SELECT COUNT(DISTINCT wp_abtest_variation_views.session_id)
-   FROM wp_abtest_variation_views
-   INNER JOIN wp_abtest_goal_hits ON wp_abtest_goal_hits.session_id=wp_abtest_variation_views.session_id
-   INNER JOIN wp_abtest_goals ON wp_abtest_goals.id=wp_abtest_goal_hits.goal_id
-   WHERE wp_abtest_variation_views.variation_id=wp_abtest_variations.id AND wp_abtest_goals.experiment_id=wp_abtest_variations.experiment_id AND wp_abtest_variation_views.ip NOT IN (SELECT ip FROM wp_abtest_ip_filters)
+  (SELECT COUNT(DISTINCT session_id) FROM ".$wpdb->prefix."abtest_variation_views WHERE variation_id=".$wpdb->prefix."abtest_variations.id AND ip NOT IN (SELECT ip FROM ".$wpdb->prefix."abtest_ip_filters)) AS views,
+  (SELECT COUNT(DISTINCT ".$wpdb->prefix."abtest_variation_views.session_id)
+   FROM ".$wpdb->prefix."abtest_variation_views
+   INNER JOIN ".$wpdb->prefix."abtest_goal_hits ON ".$wpdb->prefix."abtest_goal_hits.session_id=".$wpdb->prefix."abtest_variation_views.session_id
+   INNER JOIN ".$wpdb->prefix."abtest_goals ON ".$wpdb->prefix."abtest_goals.id=".$wpdb->prefix."abtest_goal_hits.goal_id
+   WHERE ".$wpdb->prefix."abtest_variation_views.variation_id=".$wpdb->prefix."abtest_variations.id AND ".$wpdb->prefix."abtest_goals.experiment_id=".$wpdb->prefix."abtest_variations.experiment_id AND ".$wpdb->prefix."abtest_variation_views.ip NOT IN (SELECT ip FROM ".$wpdb->prefix."abtest_ip_filters)
   ) AS goal_hits
-  FROM wp_abtest_variations
+  FROM ".$wpdb->prefix."abtest_variations
   WHERE experiment_id=%d
   ORDER BY name
-', $id));
+", $id));
 
-$variations = $wpdb->get_results($wpdb->prepare('SELECT * FROM wp_abtest_variations WHERE experiment_id=%d', $id));
-$goals = $wpdb->get_results($wpdb->prepare('SELECT * FROM wp_abtest_goals WHERE experiment_id=%d', $id));
+$variations = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d", $id));
+$goals = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_goals WHERE experiment_id=%d", $id));
 ?>
 <div class="wrap">
   <h2>Experiment</h2>

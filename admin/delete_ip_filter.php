@@ -1,10 +1,10 @@
 <?php
 $id = (int)$_GET['id'];
-$filter = $wpdb->get_row($wpdb->prepare('SELECT * FROM wp_abtest_ip_filters WHERE id=%d', $id));
+$filter = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters WHERE id=%d", $id));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Delete the ip_filter
-  $wpdb->query($wpdb->prepare('DELETE FROM wp_abtest_ip_filters WHERE id=%d', $id));
+  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."abtest_ip_filters WHERE id=%d", $id));
   
   redirect_to('?page=abtest&action=list_ip_filters');
 }
