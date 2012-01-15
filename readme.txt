@@ -34,7 +34,7 @@ You have access to a number of options to measure your split tests:
 
 == Installation ==
 
-1. Upload the `ab-test-for-wordpress` directory to the `/wp-content/plugins/` directory
+1. Upload the `abtest` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
