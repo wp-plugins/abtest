@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 $id = (int)$_GET['id'];
 $var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE id=%d", $id));
 $exp = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE id=%d", $var->experiment_id));
@@ -19,8 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $themes = get_themes();
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Edit variation</h2>
+  <h3>Edit variation</h3>
   <form method="post">
     <p>
       <label for="name">Variation name:</label><br />

@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 $id = (int)$_GET['id'];
 $var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE id=%d", $id));
 
@@ -11,8 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Delete variation</h2>
+  <h3>Delete variation</h3>
   <form method="post">
     <p>
       Are you sure you want to delete the variation <em><?php echo htmlspecialchars($var->name) ?></em>? This can't be undone.

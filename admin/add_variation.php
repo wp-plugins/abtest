@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $experiment_id = (int)$_POST['experiment_id'];
   // Insert the variation
@@ -17,8 +19,9 @@ $exp = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_expe
 $themes = get_themes();
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Add variation</h2>
+  <h3>Add variation</h3>
   <form method="post">
     <input type="hidden" name="experiment_id" value="<?php echo $experiment_id ?>" />
     <p>

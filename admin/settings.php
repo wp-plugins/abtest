@@ -1,8 +1,11 @@
 <?php
-$filters = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters ORDER BY id");
+$tab = 'settings';
+
+$filters = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters");
 ?>
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>IP filters</h2>
+  <h3>IP filters</h3>
   
   <p>
     Here you can set up IP filters, e.g. to <strong>disable tracking</strong> for your own IP. Data will still be tracked but won't appear in measurements or statistics.
@@ -48,9 +51,5 @@ $filters = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters 
 
   <p>
     <input type="button" value="Add an IP filter" class="button-secondary" onclick="document.location = '?page=abtest&amp;action=add_ip_filter';" />
-  </p>
-  
-  <p>
-    &laquo; <a href="?page=abtest">Back to experiments</a>
   </p>
 </div>

@@ -1,4 +1,6 @@
 <?php
+$tab = 'settings';
+
 $id = (int)$_GET['id'];
 $filter = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_ip_filters WHERE id=%d", $id));
 
@@ -16,8 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Edit IP filter</h2>
+  <h3>Edit IP filter</h3>
   <form method="post">
     <p>
       <label for="name">IP address: <small>(e.g. 127.0.0.1)</small></label><br />
@@ -30,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </p>
     <p>
       <input class="button-primary" type="submit" name="Save" value="Update IP filter" id="submitbutton" />
-      or <a href="?page=abtest&amp;action=list_ip_filters">Cancel</a>
+      or <a href="?page=abtest&amp;action=settings">Cancel</a>
     </p>
   </form>
 </div>

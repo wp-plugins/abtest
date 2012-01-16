@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 $id = (int)$_GET['id'];
 $var = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_experiments WHERE id=%d", $id));
 
@@ -15,8 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Edit experiment</h2>
+  <h3>Edit experiment</h3>
   <form method="post">
     <p>
       <label for="name">Experiment name:</label><br />

@@ -1,43 +1,10 @@
 <?php
+$tab = 'experiments';
+
 $experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments ORDER BY name");
 ?>
-
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <div style="float: right;">
-    <?php
-    if ($_SESSION['abtest_debug']) {
-      ?>
-      <p>
-        <strong>Debug mode is on.</strong>
-        <input type="button" value="Exit debug mode" class="button-secondary" onclick="document.location = '?page=abtest&amp;action=debug_mode&amp;debug=0';" />
-      </p>
-      <?php
-    } else {
-      ?>
-      <p>
-        <input type="button" value="Enter debug mode" class="button-secondary" onclick="document.location = '?page=abtest&amp;action=debug_mode&amp;debug=1';" />
-        <a href="#" onclick="jQuery('#debug_help').toggle();">What's this?</a>
-      </p>
-      <?php
-    }
-    ?>
-  </div>
-  <h2>A/B Testing</h2>
-  
-  <p>
-    Welcome to A/B Test for WordPress. Create or edit experiments below.
-    Also see <a href="?page=abtest&amp;action=about">information and help</a>.
-    To filter out IP addresses, see <a href="?page=abtest&amp;action=list_ip_filters">IP filters</a>.
-  </p>
-  
-  <div id="debug_help" style="display: none; background: #FFFBCC; border: 1px solid #E6DB55; padding: 10px 20px;">
-    <h3>Debug mode</h3>
-    <p>
-      Normally, when a user first sees a variation to an experiment, this variation is locked for this user so that – in this session – she always sees the same variation.<br />
-      If you want to test your experiments without this variation lock taking place for you (and only you), you can enable debug mode. Also, when entering debug mode, all tracking will be disabled for your session.
-    </p>
-  </div>
-  
   <h3>Experiments</h3>
 
   <table class="wp-list-table widefat" cellspacing="0">

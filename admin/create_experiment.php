@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Insert the experiment
   $name = stripslashes($_POST['name']);
@@ -20,8 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Create experiment</h2>
+  <h3>Create experiment</h3>
   <form method="post">
     <p>
       <label for="name">Experiment name:</label><br />

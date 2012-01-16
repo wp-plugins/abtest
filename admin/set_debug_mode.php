@@ -7,5 +7,5 @@ if ($debug == 1) {
   unset($_SESSION['abtest_debug']);
 }
 
-redirect_to('?page=abtest');
+redirect_to('?page=abtest&action=debug');
 ?>

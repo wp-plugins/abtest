@@ -1,9 +1,12 @@
 <?php
+$tab = 'experiments';
+
 $id = (int)$_GET['id'];
 $goal = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_goals WHERE id=%d", $id));
 ?>
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Tracking code</h2>
+  <h3>Tracking code</h3>
   <p>
     Here's information on how to track the goal <strong><?php echo $goal->name ?></strong>.
   </p>

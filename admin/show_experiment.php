@@ -1,4 +1,6 @@
 <?php
+$tab = 'experiments';
+
 $wpdb->show_errors();
 
 $id = (int)$_GET['id'];
@@ -21,8 +23,9 @@ $variation_stats = $wpdb->get_results($wpdb->prepare("
 $variations = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d", $id));
 $goals = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_goals WHERE experiment_id=%d", $id));
 ?>
+<?php include 'tabs.php' ?>
 <div class="wrap">
-  <h2>Experiment</h2>
+  <h3>Experiment</h3>
   <p>
     This is an overview of your <em><?php echo $exp->name ?></em> experiment.<br />
     <a href="?page=abtest&amp;action=edit_experiment&amp;id=<?php echo $exp->id ?>">Edit experiment</a>
