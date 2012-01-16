@@ -217,4 +217,27 @@ function abtest_admin() {
   global $wpdb;
   include 'abtest_admin.php';
 }
-?>
+
+function abtest_rss(){
+    echo '<div class="rss-widget">';
+
+    ?>
+    <a href="?page=abtest&amp;action=close_dashboard_widget" style="float: right;" onclick="return confirm('Are you sure?');">Close</a>
+    <?php
+     
+       wp_widget_rss_output(array(
+            'url' => 'http://lassebunk.dk/tag/ab-test-for-wordpress/feed/',
+            'items' => 3,
+            'show_summary' => 1,
+            'show_date' => 1
+       ));
+
+       echo "</div>";
+}
+
+add_action('wp_dashboard_setup', 'abtest_rss_widget');
+function abtest_rss_widget(){
+  if (get_option('abtest_show_dashboard_widget', 1)) {
+    wp_add_dashboard_widget( 'abtest-rss', 'A/B Test for WordPress', 'abtest_rss');
+  }
+}?>

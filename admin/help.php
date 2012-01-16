@@ -19,7 +19,7 @@ $tab = 'help';
   <iframe width="560" height="315" src="http://www.youtube.com/embed/4VRxXj2e3_I" frameborder="0" allowfullscreen></iframe>
   
   <p>
-    More videos <a href="http://lassebunk.dk/plugins/abtest/#tutorials">here</a>.
+    You can find more videos <a href="http://lassebunk.dk/plugins/abtest/#tutorials">here</a>.
   </p>
   
   <h3>Tutorials and examples</h3>
