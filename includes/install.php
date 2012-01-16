@@ -98,6 +98,9 @@ function abtest_migrations() {
     KEY ip (ip)
   )';
   
+  // Add active field to variations
+  $migs[] = "ALTER TABLE ".$wpdb->prefix."abtest_variations ADD active BOOLEAN NOT NULL DEFAULT '1', ADD INDEX ( active )";
+
   // Return the migrations
   return $migs;
 }

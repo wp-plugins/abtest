@@ -120,9 +120,19 @@ $goals = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtes
         ?>
       	<tr>
       	  <td>
-            <a href="?page=abtest&amp;action=edit_variation&amp;id=<?php echo $var->id ?>"><strong><?php echo $var->name ?></strong></a><br />
+            <a href="?page=abtest&amp;action=edit_variation&amp;id=<?php echo $var->id ?>"><strong><?php echo $var->name ?></strong></a>
+            <?php if (!$var->active) { ?>
+              <small>(disabled)</small>
+            <?php } ?>
+            <br />
             <small>
               <a href="?page=abtest&amp;action=edit_variation&amp;id=<?php echo $var->id ?>">Edit</a>
+              |
+              <?php if ($var->active) { ?>
+                <a href="?page=abtest&amp;action=set_variation_active&amp;active=0&amp;id=<?php echo $var->id ?>">Disable</a>
+              <?php } else { ?>
+                <a href="?page=abtest&amp;action=set_variation_active&amp;active=1&amp;id=<?php echo $var->id ?>">Enable</a>
+              <?php } ?>
               |
               <a href="?page=abtest&amp;action=delete_variation&amp;id=<?php echo $var->id ?>">Delete</a>
             </small>

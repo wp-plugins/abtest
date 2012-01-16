@@ -2,7 +2,7 @@
 /*
 Plugin Name:  A/B Test for WordPress
 Plugin URI:   http://lassebunk.dk/plugins/abtest/
-Version:      1.0.5
+Version:      1.0.6
 Description:  Easily perform A/B tests on any WordPress site.
 Author:       Lasse Bunk
 Author URI:   http://lassebunk.dk/
@@ -37,7 +37,7 @@ function abtest_load_experiments() {
   foreach ($experiments as $exp) {
     if (!isset($_SESSION['abtest_experiment_'.$exp->id.'_variation']) || $_SESSION['abtest_debug']) {
       // Get variation
-      $variation = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d ORDER BY RAND() LIMIT 1", $exp->id) );
+      $variation = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d AND active=1 ORDER BY RAND() LIMIT 1", $exp->id) );
 
       // Set session
       $_SESSION['abtest_experiment_'.$exp->id.'_id'] = $variation->id;

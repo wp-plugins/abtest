@@ -2,7 +2,7 @@
 Contributors: lassebunk
 Donate link: http://lassebunk.dk/donate/
 Tags: ab testing, split testing, multivariate testing, themes, content, stylesheets, javascripts
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 
 A/B split testing for WordPress made easy.
 
@@ -46,6 +46,9 @@ You have access to a number of options to measure your split tests:
 1. Content is easily A/B split tested using this plugin.
 
 == Changelog ==
+
+= 1.0.6 =
+* Support for disabling variations.
 
 = 1.0.5 =
 * Added top tabs.
