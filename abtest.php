@@ -17,6 +17,10 @@ abtest_migrate_if_needed();
 
 // Ensure that widgets can also contain A/B Test shortcodes
 add_filter('widget_text', 'do_shortcode');
+add_filter('widget_title', 'do_shortcode');
+add_filter('the_title', 'do_shortcode');
+
+// Use the jQuery framework
 wp_enqueue_script("jquery");
 
 // Set up the viewed variations and hit goals queue
@@ -165,6 +169,24 @@ function abtest_footer_script() {
     ?>
   </script>
   <?php
+}
+
+add_action('wp_head', 'abtest_ob_start');
+function abtest_ob_start() {
+  if (get_option('abtest_do_shortcode_on_output_buffer')) {
+    ob_start('abtest_ob_callback');
+  }
+}
+
+add_action('wp_footer', 'abtest_ob_end');
+function abtest_ob_end() {
+  if (get_option('abtest_do_shortcode_on_output_buffer')) {
+    ob_end();
+  }
+}
+
+function abtest_ob_callback($content) {
+  return do_shortcode($content);
 }
 
 // [abtest experiment="123"]
