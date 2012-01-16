@@ -2,7 +2,7 @@
 /*
 Plugin Name:  A/B Test for WordPress
 Plugin URI:   http://lassebunk.dk/plugins/abtest/
-Version:      1.0.4
+Version:      1.0.5
 Description:  Easily perform A/B tests on any WordPress site.
 Author:       Lasse Bunk
 Author URI:   http://lassebunk.dk/
