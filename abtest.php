@@ -2,19 +2,24 @@
 /*
 Plugin Name:  A/B Test for WordPress
 Plugin URI:   http://lassebunk.dk/plugins/abtest/
-Version:      1.0.3
+Version:      1.0.4
 Description:  Easily perform A/B tests on any WordPress site.
 Author:       Lasse Bunk
 Author URI:   http://lassebunk.dk/
 */
 
+// Start the session
 session_start();
-require 'includes/install.php';
 
-register_activation_hook(__FILE__, 'abtest_install');
+// We check database migrations on each call to ensure migrations when the plugin is updated
+require 'includes/install.php';
+abtest_migrate_if_needed();
+
+// Ensure that widgets can also contain A/B Test shortcodes
 add_filter('widget_text', 'do_shortcode');
 wp_enqueue_script("jquery");
 
+// Set up the viewed variations and hit goals queue
 $abtest_viewed_variations = array();
 $abtest_hit_goals = array();
 

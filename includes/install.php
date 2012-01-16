@@ -1,24 +1,22 @@
 <?php
-function abtest_install() {
-  abtest_migrate();
-}
-
-function abtest_migrate() {
+function abtest_migrate_if_needed() {
 	global $wpdb;
 
 	$migs = abtest_migrations();
   $current_migration = get_option('abtest_current_migration', 0);
   $needed_migration = count($migs);
   
-  for ($i = $current_migration; $i < $needed_migration; $i++) {
-    $mig = $migs[$i];
-    $wpdb->query($mig);
-  }
+  if ($current_migration != $needed_migration) {
+    for ($i = $current_migration; $i < $needed_migration; $i++) {
+      $mig = $migs[$i];
+      $wpdb->query($mig);
+    }
   
-  if ($current_migration == 0) {
-    add_option('abtest_current_migration', $needed_migration);
-  } else {
-    update_option('abtest_current_migration', $needed_migration);
+    if ($current_migration == 0) {
+      add_option('abtest_current_migration', $needed_migration);
+    } else {
+      update_option('abtest_current_migration', $needed_migration);
+    }
   }
 }
 
