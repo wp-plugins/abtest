@@ -2,7 +2,7 @@
 /*
 Plugin Name:  A/B Test for WordPress
 Plugin URI:   http://lassebunk.dk/plugins/abtest/
-Version:      1.0.6
+Version:      1.0.7
 Description:  Easily perform A/B tests on any WordPress site.
 Author:       Lasse Bunk
 Author URI:   http://lassebunk.dk/
@@ -35,14 +35,15 @@ function abtest_load_experiments() {
   $experiments = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."abtest_experiments");
   
   foreach ($experiments as $exp) {
-    if (!isset($_SESSION['abtest_experiment_'.$exp->id.'_variation']) || $_SESSION['abtest_debug']) {
+	
+    if (!isset($_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$exp->id.'_variation']) || $_SESSION['abtest_debug']) {
       // Get variation
       $variation = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix."abtest_variations WHERE experiment_id=%d AND active=1 ORDER BY RAND() LIMIT 1", $exp->id) );
 
       // Set session
-      $_SESSION['abtest_experiment_'.$exp->id.'_id'] = $variation->id;
-      $_SESSION['abtest_experiment_'.$exp->id.'_variation'] = $variation->content;
-      $_SESSION['abtest_experiment_'.$exp->id.'_name'] = $variation->name;
+      $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$exp->id.'_id'] = $variation->id;
+      $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$exp->id.'_variation'] = $variation->content;
+      $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$exp->id.'_name'] = $variation->name;
     }
   }
 }
@@ -52,16 +53,17 @@ function abtest_experiment($id) {
 }
 
 function abtest_get_experiment($id) {
+  global $wpdb;
   global $abtest_viewed_variations;
   
-  $variation_id = $_SESSION['abtest_experiment_'.$id.'_id'];
+  $variation_id = $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$id.'_id'];
 
   if (!in_array($variation_id, $abtest_viewed_variations)) {
     // Add to viewed variations array
     $abtest_viewed_variations[] = $variation_id;
   }
 
-  return $_SESSION['abtest_experiment_'.$id.'_variation'];
+  return $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$id.'_variation'];
 }
 
 function abtest_name($experiment_id) {
@@ -69,7 +71,8 @@ function abtest_name($experiment_id) {
 }
 
 function abtest_get_name($experiment_id) {
-  return $_SESSION['abtest_experiment_'.$experiment_id.'_name'];
+   global $wpdb;
+  return $_SESSION['abtest_experiment_'.$wpdb->prefix.'_'.$experiment_id.'_name'];
 }
 
 function abtest_variation_view($variation_id) {
